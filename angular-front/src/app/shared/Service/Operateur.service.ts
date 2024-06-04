@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class OperateurService {
-  readonly API_URL = 'http://localhost:8086/operateur';
+  readonly API_URL = 'http://192.168.186.186:8086/operateur';
 
   constructor(private httpClient: HttpClient) {}
 
