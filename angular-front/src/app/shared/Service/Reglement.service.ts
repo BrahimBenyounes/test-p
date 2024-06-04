@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ReglementService {
-  readonly API_URL = 'http://localhost:8087/reglement';
+  readonly API_URL = 'http://192.168.186.186:8087/reglement';
 
   constructor(private httpClient: HttpClient) {
   }
