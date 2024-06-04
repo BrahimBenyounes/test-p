@@ -6,7 +6,7 @@ import { HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductService {
-  readonly API_URL = 'http://localhost:8087/produit';
+  readonly API_URL = 'http://192.168.186.186:8087/produit';
 
   constructor(private httpClient: HttpClient) { }
   getAllProducts() {
