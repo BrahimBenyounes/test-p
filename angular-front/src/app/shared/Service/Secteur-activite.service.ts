@@ -5,7 +5,7 @@ import { HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class SecteurActiviteService {
-  readonly API_URL = 'http://localhost:8087/secteurActivite';
+  readonly API_URL = 'http://192.168.186.186:8087/secteurActivite';
 
   constructor(private httpClient: HttpClient) { }
 
