@@ -24,7 +24,7 @@ services:
       - ms-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://eureka:8761/actuator/health"]
+      test: ["CMD-SHELL", "curl -f http://eureka:8761/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,8 +32,6 @@ services:
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
-
-
 
   mysql-operateur:
     image: mysql:8
@@ -44,10 +42,9 @@ services:
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=operateur
     healthcheck:
-            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 10
-
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   operateur:
     container_name: operateur
@@ -62,9 +59,9 @@ services:
     environment:
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-operateur/operateur?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
     healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://operateur:8086 || exit 1"]
+      test: ["CMD-SHELL", "curl --fail http://localhost:8086/actuator/health || exit 1"]
       interval: 60s
       retries: 5
       start_period: 15s
@@ -85,9 +82,8 @@ services:
     networks:
       - ms-network
     environment:
-      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=test
-
 
 networks:
   local-mysql:
